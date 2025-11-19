@@ -23,7 +23,12 @@
       </view>
     </view>
     <view class="categories">
-      <view class="category" v-for="c in categories" :key="c.label">
+      <view
+        class="category"
+        v-for="c in categories"
+        :key="c.label"
+        @tap="goCategory(c)"
+      >
         <view class="cat-icon">{{ c.icon }}</view>
         <text class="cat-label">{{ c.label }}</text>
       </view>
@@ -40,7 +45,7 @@
       <view class="float-btn">💬</view>
     </view>
     <view class="product-list">
-      <view class="product-card" v-for="p in products" :key="p.id">
+      <view class="product-card" v-for="p in products" :key="p.id" @tap="goDetail(p)">
         <view class="product-media">
           <image class="product-image" :src="p.image" mode="aspectFill" />
           <view class="product-badges">
@@ -82,6 +87,18 @@ const categories = [
   { icon: "📱", label: "电子" },
   { icon: "👔", label: "男士护理" },
 ];
+function goCategory(c: { label: string }) {
+  try {
+    uni.setStorageSync("selected-category", c.label);
+  } catch (e) {}
+  uni.switchTab({ url: "/pages/category/index" });
+}
+function goDetail(p: any) {
+  try {
+    uni.setStorageSync("selected-product", p);
+  } catch (e) {}
+  uni.navigateTo({ url: "/pages/product/detail" });
+}
 const products = [
   {
     id: 1,
@@ -183,7 +200,12 @@ const products = [
   margin: 20rpx;
   height: 280rpx;
   border-radius: 20rpx;
-  background-image: linear-gradient(135deg, #96e6ff 0%, #9ff0cf 50%, #64d7ff 100%);
+  background-image: linear-gradient(
+    135deg,
+    #96e6ff 0%,
+    #9ff0cf 50%,
+    #64d7ff 100%
+  );
   display: flex;
   align-items: center;
   justify-content: center;
