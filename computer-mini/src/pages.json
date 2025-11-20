@@ -45,6 +45,10 @@
         {
           "path": "setting/index",
           "style": { "navigationBarTitleText": "账户设置" }
+        },
+        {
+          "path": "adress/index",
+          "style": { "navigationBarTitleText": "收货地址" }
         }
       ]
     }

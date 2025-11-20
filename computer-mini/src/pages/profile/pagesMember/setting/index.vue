@@ -12,7 +12,7 @@
     </view>
 
     <view class="list">
-      <view class="cell" @tap="toast('管理我的地址')">
+      <view class="cell" @tap="goAddress">
         <text>收货地址管理</text>
         <text class="cell-sub">管理我的地址</text>
       </view>
@@ -52,6 +52,7 @@ const alias = computed(() => auth.phone ? auth.phone.replace(/(\d{3})\d{4}(\d{4}
 
 function toast(t: string) { uni.showToast({ title: t, icon: 'none' }) }
 function logout() { auth.logout(); uni.showToast({ title: '已退出登录', icon: 'none' }); setTimeout(()=>uni.navigateBack(), 200) }
+function goAddress() { uni.navigateTo({ url: '/pages/profile/pagesMember/adress/index' }) }
 </script>
 
 <style lang="scss">
