@@ -10,12 +10,16 @@
         </view>
       </view>
       <view class="actions">
-        <button class="btn cart" type="default">加入购物车</button>
+        <button class="btn cart" type="default" @tap="addToCart">
+          加入购物车
+        </button>
         <button class="btn buy" type="primary">立即购买</button>
       </view>
       <view class="desc">
         <text>商品详情</text>
-        <text class="desc-text">这是一款优选商品，图片与价格均为示例数据。</text>
+        <text class="desc-text"
+          >这是一款优选商品，图片与价格均为示例数据。</text
+        >
       </view>
     </view>
     <view v-else class="empty">
@@ -26,22 +30,44 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { onLoad } from '@dcloudio/uni-app'
+import { ref } from "vue";
+import { onLoad } from "@dcloudio/uni-app";
+import { useCartStore } from "@/stores/cart";
 
-type Product = { id: number; title: string; image: string; price: number; promo?: string }
+type Product = {
+  id: number;
+  title: string;
+  image: string;
+  price: number;
+  promo?: string;
+};
 
-const product = ref<Product | null>(null)
+const product = ref<Product | null>(null);
+const cart = useCartStore();
 
 onLoad(() => {
   try {
-    const p = uni.getStorageSync('selected-product')
-    if (p) product.value = p
+    const p = uni.getStorageSync("selected-product");
+    if (p) product.value = p;
   } catch (e) {}
-})
+});
 
 function goBack() {
-  uni.navigateBack()
+  uni.navigateBack();
+}
+
+function addToCart() {
+  if (!product.value) return;
+  cart.add(
+    {
+      id: product.value.id,
+      title: product.value.title,
+      image: product.value.image,
+      price: product.value.price,
+    },
+    1
+  );
+  uni.showToast({ title: "已加入购物车", icon: "success" });
 }
 </script>
 
