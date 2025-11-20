@@ -49,6 +49,10 @@
         {
           "path": "adress/index",
           "style": { "navigationBarTitleText": "收货地址" }
+        },
+        {
+          "path": "adress/add",
+          "style": { "navigationBarTitleText": "新增收货地址" }
         }
       ]
     }
