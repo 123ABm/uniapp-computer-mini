@@ -21,12 +21,6 @@
       }
     },
     {
-      "path": "pages/discover/index",
-      "style": {
-        "navigationBarTitleText": "发现"
-      }
-    },
-    {
       "path": "pages/cart/index",
       "style": {
         "navigationBarTitleText": "购物车"
@@ -44,6 +38,17 @@
     "navigationBarBackgroundColor": "#F8F8F8",
     "backgroundColor": "#F8F8F8"
   },
+  "subPackages": [
+    {
+      "root": "pages/profile/pagesMember",
+      "pages": [
+        {
+          "path": "setting/index",
+          "style": { "navigationBarTitleText": "账户设置" }
+        }
+      ]
+    }
+  ],
   "tabBar": {
     "color": "#7A7E83",
     "selectedColor": "#FF2D2D",
@@ -52,7 +57,6 @@
     "list": [
       { "pagePath": "pages/index/index", "text": "首页" },
       { "pagePath": "pages/category/index", "text": "分类" },
-      { "pagePath": "pages/discover/index", "text": "发现" },
       { "pagePath": "pages/cart/index", "text": "购物车" },
       { "pagePath": "pages/profile/index", "text": "我的" }
     ]
