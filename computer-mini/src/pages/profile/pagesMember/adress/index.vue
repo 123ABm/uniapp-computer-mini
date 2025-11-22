@@ -70,6 +70,9 @@ const addrs = ref<Addr[]>([
 function setDefault(a: Addr) {
   addrs.value.forEach((x) => (x.default = false));
   a.default = true;
+  try {
+    uni.setStorageSync('addr-default', a)
+  } catch (e) {}
 }
 function del(a: Addr) {
   addrs.value = addrs.value.filter((x) => x.id !== a.id);

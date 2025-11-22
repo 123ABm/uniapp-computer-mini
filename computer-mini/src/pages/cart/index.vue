@@ -55,7 +55,7 @@
         <text class="sum">合计：<text class="sum-price">¥{{ selectedPrice }}</text></text>
         <text class="extra">不含运费</text>
       </view>
-      <button class="settle">领券结算({{ selectedCount }})</button>
+      <button class="settle" @tap="goOrder">领券结算({{ selectedCount }})</button>
     </view>
   </view>
 </template>
@@ -79,6 +79,18 @@ function onQty(it: CartItem, e: any) {
 function remove(it: CartItem) { cart.remove(it.id); uni.showToast({ title: '已删除', icon: 'none' }) }
 function moveFav(_it: CartItem) { uni.showToast({ title: '已移入关注', icon: 'none' }) }
 function goHome() { uni.switchTab({ url: '/pages/index/index' }) }
+
+function goOrder() {
+  if (!selectedCount.value) { uni.showToast({ title: '请先选择商品', icon: 'none' }); return }
+  const sel = items.value.filter(i => i.selected)
+  const payload = {
+    items: sel.map(i => ({ id: i.id, title: i.title, image: i.image, price: i.price, qty: i.qty })),
+    total: parseFloat(selectedPrice.value as any),
+    shop: 'JD 京东自营'
+  }
+  try { uni.setStorageSync('order-draft', payload) } catch (e) {}
+  uni.navigateTo({ url: '/pages/pagesOrder/fill/index' })
+}
 </script>
 
 <style lang="scss">

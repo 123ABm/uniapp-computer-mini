@@ -55,8 +55,20 @@
           "style": { "navigationBarTitleText": "新增收货地址" }
         }
       ]
+    },
+    {
+      "root": "pages/pagesOrder",
+      "pages": [
+        { "path": "fill/index", "style": { "navigationBarTitleText": "填写订单" } }
+      ]
     }
   ],
+  "preloadRule": {
+    "pages/cart/index": {
+      "network": "all",
+      "packages": ["pages/pagesOrder"]
+    }
+  },
   "tabBar": {
     "color": "#7A7E83",
     "selectedColor": "#FF2D2D",
