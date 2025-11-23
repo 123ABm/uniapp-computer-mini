@@ -1,5 +1,6 @@
 import { createSSRApp } from "vue";
-import { createPinia, PiniaPluginContext } from "pinia";
+import { createPinia } from "pinia";
+import type { PiniaPluginContext } from "pinia";
 import App from "./App.vue";
 export function createApp() {
   const app = createSSRApp(App);

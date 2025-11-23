@@ -1,7 +1,11 @@
 <template>
   <view class="page">
     <view v-if="product" class="detail">
-      <image class="cover" :src="product.image" mode="aspectFill" />
+      <swiper class="gallery" indicator-dots circular v-if="gallery.length">
+        <swiper-item v-for="(img, idx) in gallery" :key="img" @tap="preview(idx)">
+          <image class="cover" :src="img" mode="aspectFill" />
+        </swiper-item>
+      </swiper>
       <view class="info">
         <text class="title">{{ product.title }}</text>
         <view class="price-row">
@@ -30,7 +34,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { onLoad } from "@dcloudio/uni-app";
 import { useCartStore } from "@/stores/cart";
 
@@ -40,10 +44,17 @@ type Product = {
   image: string;
   price: number;
   promo?: string;
+  images?: string[];
 };
 
 const product = ref<Product | null>(null);
 const cart = useCartStore();
+const gallery = computed(() => {
+  const p = product.value
+  if (!p) return [] as string[]
+  const imgs = (p.images && p.images.length) ? p.images : [p.image]
+  return imgs
+})
 
 onLoad(() => {
   try {
@@ -69,6 +80,12 @@ function addToCart() {
   );
   uni.showToast({ title: "已加入购物车", icon: "success" });
 }
+
+function preview(current: number) {
+  const urls = gallery.value
+  if (!urls.length) return
+  uni.previewImage({ urls, current })
+}
 </script>
 
 <style lang="scss">
@@ -78,10 +95,8 @@ function addToCart() {
 .detail {
   padding-bottom: 120rpx;
 }
-.cover {
-  width: 100%;
-  height: 520rpx;
-}
+.gallery { width: 100%; height: 520rpx; }
+.cover { width: 100%; height: 100%; }
 .info {
   background: #ffffff;
   margin: 20rpx;

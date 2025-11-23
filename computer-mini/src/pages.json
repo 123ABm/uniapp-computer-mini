@@ -59,7 +59,10 @@
     {
       "root": "pages/pagesOrder",
       "pages": [
-        { "path": "fill/index", "style": { "navigationBarTitleText": "填写订单" } }
+        {
+          "path": "fill/index",
+          "style": { "navigationBarTitleText": "填写订单" }
+        }
       ]
     }
   ],
