@@ -10,6 +10,7 @@
         <text class="icon-scan"></text>
       </view>
     </view>
+
     <scroll-view
       class="main-scroll"
       :scroll-y="true"
@@ -17,20 +18,9 @@
       :refresher-triggered="refreshing"
       @refresherrefresh="onRefresh"
     >
-      <swiper
-        class="hero-swiper"
-        indicator-dots
-        indicator-color="#c0c0c0"
-        indicator-active-color="#ffffff"
-        circular
-        autoplay
-        interval="3000"
-      >
-        <swiper-item v-for="b in banners" :key="b.id" @tap="goProduct(b)">
-          <image class="banner-image" :src="b.image" mode="aspectFill" />
-        </swiper-item>
-      </swiper>
-
+      <!-- 轮播图 -->
+      <XYswiper :banners="banners" />
+      <!-- 分类区 -->
       <view class="categories">
         <view
           class="category"
@@ -45,214 +35,22 @@
         </view>
       </view>
       <!-- 通知 -->
-      <view class="inform">
-        <view class="inform-info">
-          <view class="picture">
-            <image src="@/static/gg_ico.png" mode=""></image>
-          </view>
-          <view class="info">
-            <swiper
-              class="swiper"
-              :circular="true"
-              :vertical="true"
-              :indicator-dots="false"
-              :autoplay="true"
-              :interval="3000"
-              :duration="1000"
-            >
-              <swiper-item>
-                <view class="swiper-item" @click="onSkip('inform')">
-                  <text class="one-omit"
-                    >何*** 理刚刚通过推广赚了￥25.00元，商品男装休闲装购买</text
-                  >
-                </view>
-              </swiper-item>
-              <swiper-item>
-                <view class="swiper-item" @click="onSkip('inform')">
-                  <text class="one-omit"
-                    >张*** 理刚刚通过推广赚了￥99.00元，商品Mac book pro
-                    15寸购买</text
-                  >
-                </view>
-              </swiper-item>
-              <swiper-item>
-                <view class="swiper-item" @click="onSkip('inform')">
-                  <text class="one-omit"
-                    >郑*** 理刚刚通过推广赚了￥88.00元，商品华为meat30
-                    pro购买</text
-                  >
-                </view>
-              </swiper-item>
-            </swiper>
-          </view>
-        </view>
-      </view>
+      <Inform :notices="notices" @skip="onSkip" />
       <view class="coupon">
-        <view class="coupon-card">
-          <text class="coupon-title">会员领券狂欢购</text>
-          <view class="coupon-action">GO</view>
-        </view>
-        <text class="coupon-sub">领券满300减50元</text>
+        <img
+          src="https://image1.suning.cn/uimg/cms/img/176371780926372556.gif"
+          alt=""
+        />
       </view>
       <!-- 限时抢购，好货精选 -->
-      <view class="flash-good">
-        <view class="flash-sale">
-          <view class="line"></view>
-          <view class="flash-title" @click="onSkip('flash')">
-            <view class="pictrue">
-              <image src="/static/xsqg_title.png" mode=""></image>
-            </view>
-            <view class="date-time">
-              <text class="time">02</text>
-              <text class="da">:</text>
-              <text class="time">15</text>
-              <text class="da">:</text>
-              <text class="time">55</text>
-            </view>
-          </view>
-          <view class="goods-list">
-            <view class="list" @click="onSkip('goods')">
-              <view class="pictrue">
-                <image src="/static/img/goods_01.png"></image>
-              </view>
-              <view class="price">
-                <text class="selling-price">￥59</text>
-                <text class="original-price">￥999</text>
-              </view>
-            </view>
-            <view class="list" @click="onSkip('goods')">
-              <view class="pictrue">
-                <image src="/static/img/goods_02.png"></image>
-              </view>
-              <view class="price">
-                <text class="selling-price">￥59</text>
-                <text class="original-price">￥999</text>
-              </view>
-            </view>
-          </view>
-        </view>
-        <view class="good-choice">
-          <view class="goods-title" @click="onSkip('GoodChoice')">
-            <view class="title">
-              <text>好货精选</text>
-            </view>
-            <view class="describe">
-              <text>全场</text>
-              <text class="num">1</text>
-              <text>折起</text>
-            </view>
-          </view>
-          <view class="goods-list">
-            <view class="list" @click="onSkip('goods')">
-              <view class="pictrue">
-                <image src="/static/img/goods_03.png"></image>
-              </view>
-              <view class="price">
-                <text class="selling-price">￥59</text>
-                <text class="original-price">￥999</text>
-              </view>
-            </view>
-            <view class="list" @click="onSkip('goods')">
-              <view class="pictrue">
-                <image src="/static/img/goods_08.png"></image>
-              </view>
-              <view class="price">
-                <text class="selling-price">￥59</text>
-                <text class="original-price">￥999</text>
-              </view>
-            </view>
-          </view>
-        </view>
-      </view>
+      <FlashGood
+        :flashSale="flashSale"
+        :goodChoice="goodChoice"
+        @skip="onSkip"
+      />
       <!-- 今日上新 -->
-      <view class="new-product">
-        <view class="product-title">
-          <view class="title">
-            <image src="/static/hr_ico.png"></image>
-            <text>今日上新</text>
-          </view>
-          <view class="describe">
-            <text>今日上新商品是否有你心仪礼物</text>
-          </view>
-        </view>
-        <view class="goods-list">
-          <view class="list" @click="onSkip('goods')">
-            <view class="pictrue">
-              <image src="/static/img/goods_07.png"></image>
-            </view>
-            <view class="price" @click="onSkip('goods')">
-              <text class="selling-price">￥59</text>
-              <text class="original-price">￥19</text>
-            </view>
-          </view>
-          <view class="list" @click="onSkip('goods')">
-            <view class="pictrue">
-              <image src="/static/img/goods_10.png"></image>
-            </view>
-            <view class="price">
-              <text class="selling-price">￥399</text>
-              <text class="original-price">￥299</text>
-            </view>
-          </view>
-          <view class="list" @click="onSkip('goods')">
-            <view class="pictrue">
-              <image src="/static/img/goods_11.png"></image>
-            </view>
-            <view class="price">
-              <text class="selling-price">￥3999</text>
-              <text class="original-price">￥2999</text>
-            </view>
-          </view>
-          <view class="list" @click="onSkip('goods')">
-            <view class="pictrue">
-              <image src="/static/img/goods_10.png"></image>
-            </view>
-            <view class="price">
-              <text class="selling-price">￥599</text>
-              <text class="original-price">￥199</text>
-            </view>
-          </view>
-        </view>
-      </view>
-      <view class="float-actions">
-        <view class="float-btn">📞</view>
-        <view class="float-btn">💬</view>
-      </view>
-      <view class="recommend-info">
-        <view class="recommend-title">
-          <view class="title">
-            <image src="/static/wntj_title.png" mode=""></image>
-          </view>
-        </view>
-        <view class="goods-list">
-          <view
-            class="list"
-            v-for="(item, index) in goodsList"
-            @click="onSkip('goods')"
-            :key="index"
-          >
-            <view class="pictrue">
-              <image :src="item.img" mode="heightFix"></image>
-            </view>
-            <view class="title-tag">
-              <view class="tag">
-                <text v-if="item.is_goods === 1">特价</text>
-                {{ item.name }}
-              </view>
-            </view>
-            <view class="price-info">
-              <view class="user-price">
-                <text class="min">￥</text>
-                <text class="max">{{ item.price }}</text>
-              </view>
-              <view class="vip-price">
-                <image src="/static/vip_ico.png"></image>
-                <text>￥{{ item.vip_price }}</text>
-              </view>
-            </view>
-          </view>
-        </view>
-      </view>
+      <NewProduct :items="newProduct" @skip="onSkip" />
+      <RecommendInfo :items="goodsList" @skip="onSkip" />
     </scroll-view>
     <view v-if="showPromo" class="promo-mask">
       <image class="promo-image" src="@/static/index/ad.png" mode="widthFix" />
@@ -264,6 +62,11 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { onLoad } from "@dcloudio/uni-app";
+import XYswiper from "./components/XYswiper";
+import Inform from "./components/Inform";
+import FlashGood from "./components/FlashGood";
+import NewProduct from "./components/NewProduct";
+import RecommendInfo from "./components/RecommendInfo";
 import img1 from "@/static/index/1.png";
 import img2 from "@/static/index/2.png";
 import img3 from "@/static/index/3.png";
@@ -323,6 +126,25 @@ const banners = [
     promo: "直降",
     images: [img5],
   },
+];
+const notices = [
+  "何*** 理刚刚通过推广赚了￥25.00元，商品男装休闲装购买",
+  "张*** 理刚刚通过推广赚了￥99.00元，商品Mac book pro 15寸购买",
+  "郑*** 理刚刚通过推广赚了￥88.00元，商品华为meat30 pro购买",
+];
+const flashSale = [
+  { img: "/static/img/goods_01.png", price: 59, original: 999 },
+  { img: "/static/img/goods_02.png", price: 59, original: 999 },
+];
+const goodChoice = [
+  { img: "/static/img/goods_03.png", price: 59, original: 999 },
+  { img: "/static/img/goods_08.png", price: 59, original: 999 },
+];
+const newProduct = [
+  { img: "/static/img/goods_07.png", price: 59, original: 19 },
+  { img: "/static/img/goods_10.png", price: 399, original: 299 },
+  { img: "/static/img/goods_11.png", price: 3999, original: 2999 },
+  { img: "/static/img/goods_10.png", price: 599, original: 199 },
 ];
 const goodsList = [
   {
@@ -559,67 +381,6 @@ function goCategory(c: { label: string }) {
   } catch (e) {}
   uni.switchTab({ url: "/pages/category/index" });
 }
-function goDetail(p: any) {
-  try {
-    uni.setStorageSync("selected-product", p);
-  } catch (e) {}
-  uni.navigateTo({ url: "/pages/product/detail" });
-}
-function goProduct(b: any) {
-  goDetail(b);
-}
-const products = [
-  {
-    id: 1,
-    title: "金立手机 灵动岛智能手机 全新超薄八核大屏",
-    image: "https://picsum.photos/seed/phone/400/400",
-    price: 359.0,
-    comments: "5000+",
-    self: true,
-    badge: "6.5",
-    promo: "直降",
-  },
-  {
-    id: 2,
-    title: "暮云泡茶壶加厚玻璃茶壶 大容量办公茶具",
-    image: "https://picsum.photos/seed/teapot/400/400",
-    price: 9.99,
-    comments: "1.2万+",
-    self: false,
-    badge: "包邮",
-    promo: "京喜价",
-  },
-  {
-    id: 3,
-    title: "秋冬连帽卫衣 情侣款保暖休闲运动外套",
-    image: "https://picsum.photos/seed/hoodie/400/400",
-    price: 119.0,
-    comments: "8000+",
-    self: true,
-    badge: "新品",
-    promo: "限时",
-  },
-  {
-    id: 4,
-    title: "金属杆中性笔 学生办公书写顺滑 20支装",
-    image: "https://picsum.photos/seed/pens/400/400",
-    price: 19.9,
-    comments: "2万+",
-    self: false,
-    badge: "热卖",
-    promo: "直降",
-  },
-  {
-    id: 5,
-    title: "智能手表 运动健康监测 防水蓝牙通话",
-    image: "https://picsum.photos/seed/watch/400/400",
-    price: 259.0,
-    comments: "3万+",
-    self: true,
-    badge: "爆款",
-    promo: "限时",
-  },
-];
 </script>
 
 <style lang="scss">
@@ -727,37 +488,10 @@ const products = [
   }
 }
 .coupon {
-  margin: 10rpx 20rpx 30rpx 20rpx;
-  .coupon-card {
-    background-image: linear-gradient(135deg, #b276ff, #ff77ac);
-    border-radius: 20rpx;
-    padding: 24rpx;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .coupon-title {
-    font-size: 40rpx;
-    font-weight: 600;
-    color: #ffffff;
-  }
-  .coupon-action {
-    width: 72rpx;
-    height: 72rpx;
-    border-radius: 36rpx;
-    background: #ff8a4d;
-    color: #ffffff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 26rpx;
-    font-weight: 600;
-  }
-  .coupon-sub {
-    margin-top: 12rpx;
-    text-align: center;
-    font-size: 24rpx;
-    color: #7aaef5;
+  margin: 30rpx 20rpx 30rpx 20rpx;
+  image {
+    width: 100%;
+    height: 223rpx;
   }
 }
 .float-actions {
