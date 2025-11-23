@@ -94,34 +94,162 @@
         </view>
         <text class="coupon-sub">领券满300减50元</text>
       </view>
+      <!-- 限时抢购，好货精选 -->
+      <view class="flash-good">
+        <view class="flash-sale">
+          <view class="line"></view>
+          <view class="flash-title" @click="onSkip('flash')">
+            <view class="pictrue">
+              <image src="/static/xsqg_title.png" mode=""></image>
+            </view>
+            <view class="date-time">
+              <text class="time">02</text>
+              <text class="da">:</text>
+              <text class="time">15</text>
+              <text class="da">:</text>
+              <text class="time">55</text>
+            </view>
+          </view>
+          <view class="goods-list">
+            <view class="list" @click="onSkip('goods')">
+              <view class="pictrue">
+                <image src="/static/img/goods_01.png"></image>
+              </view>
+              <view class="price">
+                <text class="selling-price">￥59</text>
+                <text class="original-price">￥999</text>
+              </view>
+            </view>
+            <view class="list" @click="onSkip('goods')">
+              <view class="pictrue">
+                <image src="/static/img/goods_02.png"></image>
+              </view>
+              <view class="price">
+                <text class="selling-price">￥59</text>
+                <text class="original-price">￥999</text>
+              </view>
+            </view>
+          </view>
+        </view>
+        <view class="good-choice">
+          <view class="goods-title" @click="onSkip('GoodChoice')">
+            <view class="title">
+              <text>好货精选</text>
+            </view>
+            <view class="describe">
+              <text>全场</text>
+              <text class="num">1</text>
+              <text>折起</text>
+            </view>
+          </view>
+          <view class="goods-list">
+            <view class="list" @click="onSkip('goods')">
+              <view class="pictrue">
+                <image src="/static/img/goods_03.png"></image>
+              </view>
+              <view class="price">
+                <text class="selling-price">￥59</text>
+                <text class="original-price">￥999</text>
+              </view>
+            </view>
+            <view class="list" @click="onSkip('goods')">
+              <view class="pictrue">
+                <image src="/static/img/goods_08.png"></image>
+              </view>
+              <view class="price">
+                <text class="selling-price">￥59</text>
+                <text class="original-price">￥999</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <!-- 今日上新 -->
+      <view class="new-product">
+        <view class="product-title">
+          <view class="title">
+            <image src="/static/hr_ico.png"></image>
+            <text>今日上新</text>
+          </view>
+          <view class="describe">
+            <text>今日上新商品是否有你心仪礼物</text>
+          </view>
+        </view>
+        <view class="goods-list">
+          <view class="list" @click="onSkip('goods')">
+            <view class="pictrue">
+              <image src="/static/img/goods_07.png"></image>
+            </view>
+            <view class="price" @click="onSkip('goods')">
+              <text class="selling-price">￥59</text>
+              <text class="original-price">￥19</text>
+            </view>
+          </view>
+          <view class="list" @click="onSkip('goods')">
+            <view class="pictrue">
+              <image src="/static/img/goods_10.png"></image>
+            </view>
+            <view class="price">
+              <text class="selling-price">￥399</text>
+              <text class="original-price">￥299</text>
+            </view>
+          </view>
+          <view class="list" @click="onSkip('goods')">
+            <view class="pictrue">
+              <image src="/static/img/goods_11.png"></image>
+            </view>
+            <view class="price">
+              <text class="selling-price">￥3999</text>
+              <text class="original-price">￥2999</text>
+            </view>
+          </view>
+          <view class="list" @click="onSkip('goods')">
+            <view class="pictrue">
+              <image src="/static/img/goods_10.png"></image>
+            </view>
+            <view class="price">
+              <text class="selling-price">￥599</text>
+              <text class="original-price">￥199</text>
+            </view>
+          </view>
+        </view>
+      </view>
       <view class="float-actions">
         <view class="float-btn">📞</view>
         <view class="float-btn">💬</view>
       </view>
-      <view class="product-list">
-        <view
-          class="product-card"
-          v-for="p in products"
-          :key="p.id"
-          @tap="goDetail(p)"
-        >
-          <view class="product-media">
-            <image class="product-image" :src="p.image" mode="aspectFill" />
-            <view class="product-badges">
-              <view class="badge badge-orange" v-if="p.badge">{{
-                p.badge
-              }}</view>
-              <view class="badge badge-red" v-if="p.promo">{{ p.promo }}</view>
+      <view class="recommend-info">
+        <view class="recommend-title">
+          <view class="title">
+            <image src="/static/wntj_title.png" mode=""></image>
+          </view>
+        </view>
+        <view class="goods-list">
+          <view
+            class="list"
+            v-for="(item, index) in goodsList"
+            @click="onSkip('goods')"
+            :key="index"
+          >
+            <view class="pictrue">
+              <image :src="item.img" mode="heightFix"></image>
             </view>
-          </view>
-          <text class="product-title">{{ p.title }}</text>
-          <view class="product-price-row">
-            <text class="price">¥{{ p.price }}</text>
-            <text class="see-similar">看相似</text>
-          </view>
-          <view class="product-meta">
-            <text class="tag" v-if="p.self">自营</text>
-            <text class="comments">{{ p.comments }}条评价</text>
+            <view class="title-tag">
+              <view class="tag">
+                <text v-if="item.is_goods === 1">特价</text>
+                {{ item.name }}
+              </view>
+            </view>
+            <view class="price-info">
+              <view class="user-price">
+                <text class="min">￥</text>
+                <text class="max">{{ item.price }}</text>
+              </view>
+              <view class="vip-price">
+                <image src="/static/vip_ico.png"></image>
+                <text>￥{{ item.vip_price }}</text>
+              </view>
+            </view>
           </view>
         </view>
       </view>
@@ -196,6 +324,169 @@ const banners = [
     images: [img5],
   },
 ];
+const goodsList = [
+  {
+    id: 1,
+    name: "BANDALY 2020夏季女装连衣裙韩版大码宽松显瘦套装裙子两件套 JX19301 上豆绿下米白 M ",
+    price: "219.00",
+    vip_price: "129.00",
+    img: "/static/img/goods_thumb_01.png",
+    is_goods: 0,
+  },
+  {
+    id: 1,
+    name: "花花公子 卫衣男秋季圆领薄款休闲体恤男士时尚长袖T恤外套上衣男生情侣装套头衣服秋天男装 白色 XL",
+    price: "139.00",
+    vip_price: "99.00",
+    img: "/static/img/goods_thumb_02.png",
+    is_goods: 1,
+  },
+  {
+    id: 1,
+    name: "【两件套】花花公子PLAYBOY短袖T恤男套装夏季新款卫衣男士韩版修身冰丝宽松运动休闲上衣服裤子男装 CYFS903卡其色 XL",
+    price: "168.00",
+    vip_price: "158.00",
+    img: "/static/img/goods_thumb_03.png",
+    is_goods: 1,
+  },
+  {
+    id: 1,
+    name: "雪域森林短袖T恤男装2020夏季潮流时尚衣服男潮牌圆领印花宽松T恤半袖男 20855橙色 XL",
+    price: "68.00",
+    vip_price: "36.00",
+    img: "/static/img/goods_thumb_04.png",
+    is_goods: 0,
+  },
+  {
+    id: 1,
+    name: "短袖男夏季T恤男装韩版潮流印花套头衣服男士圆领宽松五分袖学生休闲夏天运动时尚情侣装大码 D119白色 XL",
+    price: "68.00",
+    vip_price: "59.00",
+    img: "/static/img/goods_thumb_05.png",
+    is_goods: 0,
+  },
+  {
+    id: 1,
+    name: "时尚休闲套装女夏季热天宽松女孩中学生高中初中生女生短袖套装衣服夏天少女学生韩版原宿风T恤潮流裤子一套 绿字母上衣+绿色裤两件套 均码",
+    price: "83.00",
+    vip_price: "78.00",
+    img: "/static/img/goods_thumb_06.png",
+    is_goods: 1,
+  },
+  {
+    id: 1,
+    name: "北极绒2020春夏季棉质睡衣女睡裙女夏季韩版纯棉短袖少女性感睡衣甜美可爱卡通家居服连衣裙 A3023 M【纯棉 品质保障】",
+    price: "68.00",
+    vip_price: "48.00",
+    img: "/static/img/goods_thumb_07.png",
+    is_goods: 1,
+  },
+  {
+    id: 1,
+    name: "韩卡婷 2020新款夏季短袖t恤女宽松学生衣服原宿风青春百搭显瘦上衣体恤闺蜜女装 白色 均码【80-120斤】",
+    price: "29.00",
+    vip_price: "19.00",
+    img: "/static/img/goods_thumb_08.png",
+    is_goods: 0,
+  },
+  {
+    id: 1,
+    name: "美连诚雪纺连衣裙 2020新款女夏裙子波点气质沙滩裙仙气时尚女装休闲衣服大码女装 白底红点 M ",
+    price: "168.00",
+    vip_price: "160.00",
+    img: "/static/img/goods_thumb_09.png",
+    is_goods: 0,
+  },
+  {
+    id: 1,
+    name: "凝拉t恤女短袖纯棉2020新款夏装中长款韩版宽松大码欧货潮上衣服半袖体恤 桔色2053 2XL（建议150-170斤)",
+    price: "89.00",
+    vip_price: "78.00",
+    img: "/static/img/goods_thumb_10.png",
+    is_goods: 0,
+  },
+  {
+    id: 1,
+    name: "荣耀Play4T 全网通6GB+128GB大内存 幻夜黑 4000mAh大电池 4800万AI摄影  6.39英寸魅眼屏",
+    price: "1190.00",
+    vip_price: "1100.00",
+    img: "/static/img/goods_thumb_11.png",
+    is_goods: 0,
+  },
+  {
+    id: 1,
+    name: "小米（MI） Redmi 8A",
+    price: "699.00",
+    vip_price: "599.00",
+    img: "/static/img/goods_thumb_12.png",
+    is_goods: 0,
+  },
+  {
+    id: 1,
+    name: "Apple iPhone 11",
+    price: "5899.00",
+    vip_price: "5800.00",
+    img: "/static/img/goods_thumb_13.png",
+    is_goods: 0,
+  },
+  {
+    id: 1,
+    name: "戴尔(DELL)成就3681英特尔酷睿i5商用办公高性能台式机电脑整机(十代i5-10400 8G 1T 三年上门售后)21.5英寸",
+    price: "3699.00",
+    vip_price: "3600.00",
+    img: "/static/img/goods_thumb_14.png",
+    is_goods: 0,
+  },
+  {
+    id: 1,
+    name: "戴尔DELL灵越5000 14英寸酷睿i5网课学习轻薄笔记本电脑(十代i5-1035G1 8G 512G MX230 2G独显)银",
+    price: "4888.00",
+    vip_price: "4999.00",
+    img: "/static/img/goods_thumb_15.png",
+    is_goods: 0,
+  },
+  {
+    id: 1,
+    name: "联想(Lenovo) 来酷 Lecoo一体台式机电脑23英寸(J4105 8G 256G SSD 三年上门）白",
+    price: "4888.00",
+    vip_price: "3600.00",
+    img: "/static/img/goods_thumb_16.png",
+    is_goods: 0,
+  },
+  {
+    id: 1,
+    name: "Apple 2020新款 MacBook Pro 13.3【带触控栏】十代i5 16G 512G 2.0GHz 深空灰 笔记本电脑 轻薄本 MWP42CHA",
+    price: "18200.00",
+    vip_price: "18200.00",
+    img: "/static/img/goods_thumb_17.png",
+    is_goods: 0,
+  },
+  {
+    id: 1,
+    name: "Apple新款 Mac mini台式电脑主机 八代i5 8G 512G SSD 台式机 MXNG2CHA",
+    price: "8299.00",
+    vip_price: "8200.00",
+    img: "/static/img/goods_thumb_18.png",
+    is_goods: 0,
+  },
+  {
+    id: 1,
+    name: "同仁堂美白祛斑霜套装 淡斑美白祛黄提亮补水保湿套装 男女士护肤美白化妆品套装",
+    price: "288.00",
+    vip_price: "282.00",
+    img: "/static/img/goods_thumb_19.png",
+    is_goods: 0,
+  },
+  {
+    id: 1,
+    name: "【限定款·雕花口红8支礼盒装】中国风口红套装七夕礼物送女朋友老婆生日礼物唇膏唇釉花仙西子同心锁口红 【限定款8支雕花口红】",
+    price: "188.00",
+    vip_price: "99.00",
+    img: "/static/img/goods_thumb_20.png",
+    is_goods: 0,
+  },
+];
+
 onLoad(() => {
   showPromo.value = true;
 });
@@ -568,8 +859,6 @@ const products = [
 .tag {
   padding: 2rpx 8rpx;
   border-radius: 6rpx;
-  background: #ffd6d6;
-  color: #ff4d4f;
   font-size: 20rpx;
 }
 .comments {
@@ -681,6 +970,346 @@ const products = [
     text-overflow: ellipsis;
     white-space: nowrap;
     width: 544rpx;
+  }
+}
+
+/* 今日上新 */
+.new-product {
+  padding: 0 25rpx;
+  height: 350rpx;
+  .product-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 100rpx;
+    .title {
+      display: flex;
+      align-items: center;
+      image {
+        width: 24rpx;
+        height: 32rpx;
+      }
+      text {
+        font-size: 30rpx;
+        color: #4c4b4b;
+        margin-left: 20rpx;
+      }
+    }
+    .describe {
+      display: flex;
+      align-items: center;
+      text {
+        font-size: 26rpx;
+        color: #a09f9f;
+      }
+    }
+  }
+  .goods-list {
+    white-space: nowrap;
+    width: 100%;
+    height: 220rpx;
+    overflow-y: hidden;
+    overflow-x: auto;
+    .list {
+      display: inline-block;
+      width: 25%;
+      height: 100%;
+      margin-right: 20rpx;
+      .pictrue {
+        width: 100%;
+        height: 70%;
+        image {
+          width: 150rpx;
+          height: 150rpx;
+        }
+      }
+      .price {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        height: 30%;
+        .selling-price {
+          font-size: 28rpx;
+          font-weight: bold;
+          color: red;
+        }
+        .original-price {
+          font-size: 24rpx;
+          text-decoration: line-through;
+          color: #bbbaba;
+          margin-left: 10rpx;
+        }
+      }
+    }
+  }
+}
+
+.flash-good {
+  display: flex;
+  align-items: center;
+  padding: 0 25rpx;
+  height: 320rpx;
+  background-color: #ffffff;
+  border-bottom: 16rpx solid #f9f9f9;
+  .flash-sale {
+    position: relative;
+    width: 50%;
+    height: 100%;
+    .line {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      width: 2rpx;
+      height: 80%;
+      background-color: #f9f9f9;
+      transform: translate(0, -50%);
+    }
+    .flash-title {
+      display: flex;
+      align-items: center;
+      // justify-content: space-between;
+      width: 100%;
+      height: 80rpx;
+      .pictrue {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        image {
+          width: 118rpx;
+          height: 28rpx;
+        }
+      }
+      .date-time {
+        display: flex;
+        align-items: center;
+        margin-left: 50rpx;
+        .time {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 40rpx;
+          height: 40rpx;
+          background-color: #ff0000;
+          font-size: 24rpx;
+          color: #ffffff;
+          border-radius: 6rpx;
+        }
+        .da {
+          font-size: 34rpx;
+          color: #212121;
+          margin: 0 6rpx;
+        }
+      }
+    }
+    .goods-list {
+      display: flex;
+      width: 100%;
+      height: 220rpx;
+      .list {
+        width: 50%;
+        height: 100%;
+        .pictrue {
+          width: 100%;
+          height: 70%;
+          image {
+            width: 150rpx;
+            height: 150rpx;
+          }
+        }
+        .price {
+          display: flex;
+          align-items: center;
+          width: 100%;
+          height: 30%;
+          .selling-price {
+            font-size: 28rpx;
+            font-weight: bold;
+            color: #ff0000;
+          }
+          .original-price {
+            font-size: 24rpx;
+            text-decoration: line-through;
+            color: #bbbaba;
+            margin-left: 10rpx;
+          }
+        }
+      }
+    }
+  }
+  .good-choice {
+    width: 50%;
+    height: 100%;
+    .goods-title {
+      display: flex;
+      align-items: center;
+      padding: 0 20rpx;
+      height: 80rpx;
+      .title {
+        display: flex;
+        align-items: center;
+        text {
+          font-size: 28rpx;
+          color: #4c4b4b;
+        }
+      }
+      .describe {
+        display: flex;
+        align-items: center;
+        margin-left: 10rpx;
+        text {
+          font-size: 24rpx;
+          color: #979696;
+        }
+        .num {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: 0 6rpx;
+          width: 30rpx;
+          height: 30rpx;
+          background-color: #ff0000;
+          color: #ffffff;
+          border-radius: 6rpx;
+        }
+      }
+    }
+    .goods-list {
+      display: flex;
+      width: 100%;
+      height: 220rpx;
+      .list {
+        width: 50%;
+        height: 100%;
+        .pictrue {
+          width: 100%;
+          height: 70%;
+          image {
+            width: 150rpx;
+            height: 150rpx;
+          }
+        }
+        .price {
+          display: flex;
+          align-items: center;
+          width: 100%;
+          height: 30%;
+          .selling-price {
+            font-size: 28rpx;
+            font-weight: bold;
+            color: #ff0000;
+          }
+          .original-price {
+            font-size: 24rpx;
+            text-decoration: line-through;
+            color: #bbbaba;
+            margin-left: 10rpx;
+          }
+        }
+      }
+    }
+  }
+}
+
+.recommend-info {
+  width: 100%;
+  background-color: #f2f2f2;
+  .recommend-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100rpx;
+    .title {
+      display: flex;
+      align-items: center;
+      image {
+        width: 416rpx;
+        height: 40rpx;
+      }
+    }
+  }
+  .goods-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 0 30rpx;
+    .list {
+      width: 49%;
+      height: 540rpx;
+      margin-bottom: 20rpx;
+      background-color: #ffffff;
+      border-radius: 10rpx;
+      overflow: hidden;
+      .pictrue {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        image {
+          height: 350rpx;
+        }
+      }
+      .title-tag {
+        // display: flex;
+        height: 100rpx;
+        padding: 20rpx;
+        padding-bottom: 0rpx;
+        .tag {
+          float: left;
+          margin-right: 10rpx;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          white-space: normal;
+          font-size: 26rpx;
+          line-height: 40rpx;
+          text {
+            font-size: 24rpx;
+            color: #ffffff;
+            padding: 4rpx 16rpx;
+            background: linear-gradient(to right, #fe3b0f, #fc603a);
+            border-radius: 6rpx;
+            margin-right: 10rpx;
+          }
+        }
+      }
+      .price-info {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 20rpx;
+        height: 30rpx;
+        .user-price {
+          display: flex;
+          align-items: center;
+          text {
+            color: #ff0000;
+          }
+          .min {
+            font-size: 24rpx;
+          }
+          .max {
+            font-size: 32rpx;
+          }
+        }
+        .vip-price {
+          display: flex;
+          align-items: center;
+          image {
+            width: 26rpx;
+            height: 26rpx;
+            margin-right: 10rpx;
+          }
+          text {
+            color: #fcb735;
+            font-size: 24rpx;
+          }
+        }
+      }
+    }
   }
 }
 </style>
